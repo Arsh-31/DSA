@@ -1,0 +1,57 @@
+import java.util.*;
+
+public class Graph {
+    
+    private LinkedList<Character> list[];
+    private boolean visited[];
+    private int V;
+
+    Graph(int vertices){
+        V = vertices;
+        list = new LinkedList[vertices];
+        visited = new boolean[vertices];
+        
+        for(int i=0; i<vertices; i++) {
+            list[i] = new LinkedList<>();
+        }
+    }
+
+    void addEdges(char src, char dest) {
+        list[src].add(dest);
+    }
+
+    void BFS(char vertex) {
+        LinkedList<Character> queue = new LinkedList();
+
+        visited[vertex] = true;
+        queue.add(vertex);
+        while(queue.size() != 0){
+            vertex = queue.poll();
+            System.out.println(vertex);
+
+            Iterator<Character> iterator = list[vertex].listIterator();
+            while(iterator.hasNext()){
+                char adj = iterator.next();
+                if(!visited[adj]){
+                    visited[adj] = true;
+                    queue.add(adj);
+                }
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        
+        Graph graph = new Graph(103);
+
+        graph.addEdges('a', 'b');
+        graph.addEdges('a', 'c');
+        graph.addEdges('b', 'd');
+        graph.addEdges('c', 'e');
+        graph.addEdges('d', 'f');
+
+        System.out.println("Breadth First Search");
+        graph.BFS('a');
+    }
+
+}
